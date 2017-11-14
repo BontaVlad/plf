@@ -2,28 +2,20 @@
 %% Eg.: [1, 2, [4, 1, 4], 3, 6, [7, 10, 1, 3, 9], 5, [1, 1, 1], 7] =>
 %% [1, 2, [1, 4], 3, 6, [1, 3, 7, 9, 10], 5, [1], 7]
 
+insert(E, [], [E]):- !.
 
-apartine(X, [X|_]).
-apartine(X, [_|Rest]):- apartine(X, Rest).
+insert(E, [H|T], [H|L]):- E>H, !,
+                          insert(E, T, L).
 
-elim([], []):- !.
+insert(E, [H|T], [H|T]):- E=:=H, !.
 
-elim([H|T], R):-
-    apartine(H, T),
-    elim(T, R).
+insert(E, L, [E|L]):- !.
 
-elim([H|T], [H|R]):- elim(T, R).
+sortare([], []):-!.
 
-elim_list([], []):- !.
-
-elim_list([H|T], R):-
+sortare([H|T], L):-
     is_list(H),
-    elim_list(H, R),
-    elim_list(T, R).
+    sortare(H, L1).
 
-elim_list([H|T], R):-
-    apartine(H, T),
-    elim_list(T, R).
-
-elim_list([H|T], [H|R]):-
-    elim_list(T, R).
+sortare([H|T], L):- sortare(T, L1),
+                    insert(H, L1, L).
