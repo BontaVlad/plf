@@ -9,7 +9,7 @@ fancy([H|T1], V, P, C, [V|[H|T2]]):-
     C1 is C * 2,
     P1 is P + 1,
     P1 =:= C1,
-    writeln(C1),
+    !,
     fancy(T1, V, P1, C1, T2).
 
 fancy([H|T1], V, P, C, [H|T2]):-
